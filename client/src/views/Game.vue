@@ -11,8 +11,10 @@
                 <div
                   class="circle"
                   @click.prevent="squash(x_coord, y_coord, value)"
-                  :style="{ background: value ? 'orange' : 'black'}"
-                ></div>
+                  :style="{ 'background-image': value ? 'url(' + image1 + ')' : 'url(' + image2 + ')'}"
+                >
+                  <img src="../assets/logo.png" v-if="value">
+                </div>
               </td>
             </tr>
           </table>
@@ -23,6 +25,16 @@
           <h2>Score Board</h2>
           <hr>
           <p>Player1: {{ point }}</p>
+          <div class="progress">
+            <div
+              class="progress-bar progress-bar-striped progress-bar-animated"
+              role="progressbar"
+              aria-valuenow="75"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              :style="{width: persen}"
+            ></div>
+          </div>
         </div>
       </div>
     </div>
@@ -37,19 +49,49 @@ export default {
       mole_grid: [[0, 1, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
       has_won: false,
       point: 0,
-      finish: false
+      finish: false,
+      // image1:
+      //   "https://cdn.shopify.com/s/files/1/1061/1924/products/Ghost_Emoji_2_large.png?v=1542446803",
+      image1: ["armedi-done.png","dim-done.png","icha-done.png","rama-done.png","semi-done.png","yoki-done.png"],
+      image2: "https://www.evershine.com/wp-content/uploads/2017/11/60T90-Black.jpg",
+      image: '',
+      persen: ''
     };
   },
   mounted() {
     this.init();
+    this.timer();
   },
-  computed: {},
+  watch: {
+    point: function(val) {
+      this.persen = val + "%";
+    }
+  },
+  // computed:{
+  //   randomImage() {
+
+  //     console.log(this.image1[Math.floor(Math.random()* 6)])
+  //   }
+  // },
   methods: {
+    randomImage() {
+      this.image = this.image1[Math.floor(Math.random()* 6)]
+    },
+    timer() {
+      setTimeout(() => {
+        console.log("MASUK");
+        this.$router.push("/result");
+      }, 100000);
+    },
     init() {
-      let first = this.mole_grid.length;
-      let second = this.mole_grid[0].length;
+      const first = this.mole_grid.length;
+      const second = this.mole_grid[0].length;
       this.getRandomInt();
       setInterval(() => {
+
+        this.randomImage()
+        // console.log(this.randomImage);
+        
         this.set_mole(
           this.getRandomInt(0, first),
           this.getRandomInt(0, second),
@@ -85,13 +127,13 @@ export default {
       if (this.has_won) {
         return true;
       }
-      var sum = 0;
-      for (var i in this.mole_grid) {
-        for (var j in this.mole_grid[i]) {
+      let sum = 0;
+      for (const i in this.mole_grid) {
+        for (const j in this.mole_grid[i]) {
           sum += parseInt(this.mole_grid[i][j]);
         }
       }
-      if (sum == 0) {
+      if (sum === 0) {
         this.has_won = true;
       }
       return this.has_won;
@@ -103,6 +145,10 @@ export default {
 <style scoped>
 @import url("https://rsms.me/inter/inter.css");
 
+img{
+  width: 100%;
+  height: 100%;
+}
 p {
   font-family: "Inter", sans-serif;
   font-weight: 400;
@@ -134,9 +180,14 @@ p {
 }
 
 .circle {
-  border-radius: 10%;
+  /* border-radius: 10%; */
   width: 11rem;
   height: 14rem;
   margin: 0.3rem;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  -o-background-size: contain;
+  background-size: 100%;
+  background-repeat: no-repeat;
 }
 </style>
