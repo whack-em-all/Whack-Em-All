@@ -34,7 +34,7 @@ h1{
 #row {
   margin: 20px auto;
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
     width: 40%;
 }
 .list-group-item {

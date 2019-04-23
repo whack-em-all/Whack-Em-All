@@ -43,7 +43,7 @@
 
 <script>
 export default {
-  name: "game",
+  name: 'game',
   data() {
     return {
       mole_grid: [[0, 1, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
@@ -51,17 +51,17 @@ export default {
       point: 0,
       finish: false,
       image1: [
-        "https://storage.googleapis.com/miniwp17/yoki-done.png",
-        "https://storage.googleapis.com/miniwp17/semi-done.png",
-        "https://storage.googleapis.com/miniwp17/rama-done.png",
-        "https://storage.googleapis.com/miniwp17/icha-done.png",
-        "https://storage.googleapis.com/miniwp17/dim-done.png",
-        "https://storage.googleapis.com/miniwp17/armedi-done.png"
+        'https://storage.googleapis.com/miniwp17/yoki-done.png',
+        'https://storage.googleapis.com/miniwp17/semi-done.png',
+        'https://storage.googleapis.com/miniwp17/rama-done.png',
+        'https://storage.googleapis.com/miniwp17/icha-done.png',
+        'https://storage.googleapis.com/miniwp17/dim-done.png',
+        'https://storage.googleapis.com/miniwp17/armedi-done.png',
       ],
       image2:
-        "https://www.evershine.com/wp-content/uploads/2017/11/60T90-Black.jpg",
-      image: "",
-      persen: ""
+        'https://www.evershine.com/wp-content/uploads/2017/11/60T90-Black.jpg',
+      image: '',
+      persen: '',
     };
   },
   mounted() {
@@ -69,9 +69,9 @@ export default {
     this.timer();
   },
   watch: {
-    point: function(val) {
-      this.persen = val + "%";
-    }
+    point(val) {
+      this.persen = `${val}%`;
+    },
   },
   // computed:{
   //   randomImage() {
@@ -85,8 +85,8 @@ export default {
     },
     timer() {
       setTimeout(() => {
-        console.log("MASUK");
-        this.$router.push("/result");
+        console.log('MASUK');
+        this.$router.push('/result');
       }, 100000);
     },
     init() {
@@ -100,14 +100,14 @@ export default {
         this.set_mole(
           this.getRandomInt(0, first),
           this.getRandomInt(0, second),
-          1
+          1,
         );
       }, 500);
       setInterval(() => {
         this.set_mole(
           this.getRandomInt(0, first),
           this.getRandomInt(0, second),
-          0
+          0,
         );
       }, 70);
     },
@@ -142,8 +142,8 @@ export default {
         this.has_won = true;
       }
       return this.has_won;
-    }
-  }
+    },
+  },
 };
 </script>
 

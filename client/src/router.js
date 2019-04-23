@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import Result from './views/Result.vue';
+import Lobby from './views/Lobby.vue';
 
 Vue.use(Router);
 
@@ -17,6 +18,10 @@ export default new Router({
       path: '/result',
       name: 'result',
       component: Result,
+    }, {
+      path: '/lobby',
+      name: 'lobby',
+      component: Lobby,
     }, {
       path: '/about',
       name: 'about',

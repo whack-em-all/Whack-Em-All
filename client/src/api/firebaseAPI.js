@@ -6,7 +6,7 @@ const config = {
   databaseURL: 'https://whack-em-all.firebaseio.com',
   projectId: 'whack-em-all',
   storageBucket: 'whack-em-all.appspot.com',
-  messagingSenderId: '844310209802'
+  messagingSenderId: '844310209802',
 };
 
 firebase.initializeApp(config);
