@@ -26,6 +26,7 @@ export default {
   methods: {
     register() {
       console.log('masuk');
+      localStorage.setItem('username', this.username);
       this.$store.commit('register', this.username);
       this.$store.dispatch('getAllRoom');
       this.$router.push('/lobby');

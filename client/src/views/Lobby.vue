@@ -52,10 +52,11 @@
         <div class="col-lg-3 mx-2 mb-3" v-for="(room, index) in rooms" :key="index">
           <div class="card text-center shadow-sm bg-white rounded" style="width: 18rem;">
             <div class="card-body">
+              {{ room }}
               <h5 class="card-title">{{ room.name }}</h5>
               <h4 class="card-text">{{ room.players.length}}/5</h4>
               <a href="#" class="btn yellow mt-2 disabled" v-if="room.players.length === 5">Full</a>
-              <a href="#" class="btn blue mt-2" v-else>Join</a>
+              <a href="" class="btn blue mt-2" v-else @click.prevent="join(room.id)" >Join</a>
             </div>
           </div>
         </div>
@@ -82,8 +83,11 @@ export default {
   },
   methods: {
     registerRoom() {
-      localStorage.setItem('room', this.roomName);
       this.$store.dispatch('createRoom', this.roomName);
+      localStorage.setItem('room', this.roomName);
+      console.log("MASUK CREATE ROOM");
+      $('#exampleModalCenter').modal('toggle')
+      // this.$router.push(`/game/${localStorage.getItem('idRoom')}`);
     },
     join(roomId) {
       this.$store.dispatch('joinRoom', roomId);
