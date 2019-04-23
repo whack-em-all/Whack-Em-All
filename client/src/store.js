@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import db from '@/api/firebaseAPI';
+import router from './router';
 
 Vue.use(Vuex);
 
@@ -9,6 +10,7 @@ export default new Vuex.Store({
     rooms: [],
     currentRoomId: '',
     currentPlayer: '',
+    myRoom: {},
   },
   mutations: {
     register(state, playerName) {
@@ -16,6 +18,10 @@ export default new Vuex.Store({
     },
     getRooms(state, data) {
       state.rooms = data;
+      if(localStorage.getItem('idRoom')){
+        let room = state.rooms.find(room => room.id === localStorage.getItem('idRoom'))
+        state.myRoom = room
+      }
     },
   },
   actions: {
@@ -23,14 +29,16 @@ export default new Vuex.Store({
       db.collection('rooms')
         .add({
           name: roomName,
-          players: [{ name: state.currentPlayer, score: 0 }],
+          players: [{ name: localStorage.getItem('username'), score: 0 }],
           winner: '',
           createdAt: new Date(),
         })
-        .then(({ docs }) => {
-          console.log(docs, '=================')
+        .then(( docs ) => {
+          console.log(docs);
+          
+          localStorage.setItem('idRoom', docs._key.path.segments[1]);
+          router.push(`/game/${docs._key.path.segments[1]}`)
           dispatch('getAllRoom');
-          // this.$router.push('/room');
         })
         .catch((err) => {
           console.log(err);
@@ -63,6 +71,7 @@ export default new Vuex.Store({
         })
         .then(() => {
           dispatch('getAllRoom');
+          router.push(`/game/${roomId}`)
         })
         .catch((err) => {
           console.log(err);

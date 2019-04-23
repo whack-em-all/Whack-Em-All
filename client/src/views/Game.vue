@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="col col-lg-3">
-        <div class="container score-board">
+        <div class="container score-board" v>
           <h2>Score Board</h2>
           <hr>
           <p>Player1: {{ point }}</p>
