@@ -1,10 +1,10 @@
 import Vue from 'vue';
+import ProgressBar from 'vuejs-progress-bar';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import ProgressBar from 'vuejs-progress-bar'
 
-Vue.use(ProgressBar)
+Vue.use(ProgressBar);
 Vue.config.productionTip = false;
 
 new Vue({

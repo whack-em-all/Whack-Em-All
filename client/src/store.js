@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import db from '@/api/firebaseAPI'
+import db from '@/api/firebaseAPI';
 
 Vue.use(Vuex);
 
@@ -12,10 +12,10 @@ export default new Vuex.Store({
   },
   mutations: {
     register(state, playerName) {
-      state.currentPlayer = playerName
+      state.currentPlayer = playerName;
     },
     getRooms(state, data) {
-      state.rooms = data
+      state.rooms = data;
     },
   },
   actions: {
@@ -23,12 +23,14 @@ export default new Vuex.Store({
       db.collection('rooms')
         .add({
           name: roomName,
-          players: [{ name: state.currentPlayer, score: 0}],
+          players: [{ name: state.currentPlayer, score: 0 }],
           winner: '',
           createdAt: new Date(),
         })
         .then(({ docs }) => {
-          dispatch('getAllRoom')
+          console.log(docs, '=================')
+          dispatch('getAllRoom');
+          // this.$router.push('/room');
         })
         .catch((err) => {
           console.log(err);
@@ -37,46 +39,46 @@ export default new Vuex.Store({
     getAllRoom({ commit }) {
       db.collection('rooms')
         .orderBy('createdAt')
-        .onSnapshot(docs => {
-          let data = []
-          docs.forEach(e => {
-            let info = e.data()
-            info.id = e.id
-            data.push(info)
+        .onSnapshot((docs) => {
+          const data = [];
+          docs.forEach((e) => {
+            const info = e.data();
+            info.id = e.id;
+            data.push(info);
           });
-          commit('getRooms', data)
+          commit('getRooms', data);
         }, (err) => {
           console.log(err);
         });
     },
     joinRoom({ commit, state, dispatch }, roomId) {
-      let newPlayers = []
-      let room = state.rooms.find(room => room.id === roomId)
-      newPlayers = room.players
-      newPlayers.push({ name: state.currentPlayer, score: 0 })
+      let newPlayers = [];
+      const room = state.rooms.find(room => room.id === roomId);
+      newPlayers = room.players;
+      newPlayers.push({ name: state.currentPlayer, score: 0 });
       db.collection('rooms')
         .doc(roomId)
         .update({
           players: newPlayers,
         })
         .then(() => {
-          dispatch('getAllRoom')
+          dispatch('getAllRoom');
         })
         .catch((err) => {
           console.log(err);
         });
     },
-    setWinner({ commit, state }, result) {
-      let Players = []
-      Players.push(result.players)
+    setWinner({ commit, state, dispatch }, result) {
+      const Players = [];
+      Players.push(result.players);
       db.collection('rooms')
-        .where('name','==', localStorage.getItem('room'))
+        .where('name', '==', localStorage.getItem('room'))
         .update({
           players: Players,
-          winner: result.winner
+          winner: result.winner,
         })
         .then(() => {
-          dispatch('getAllRoom')
+          dispatch('getAllRoom');
         })
         .catch((err) => {
           console.log(err);
