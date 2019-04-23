@@ -10,6 +10,8 @@
   "dependencies": {
     "core-js": "^2.6.5",
     "firebase": "^5.10.0",
+    "firebase-admin": "^7.3.0",
+    "http2": "^3.3.7",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
     "vuejs-progress-bar": "^1.0.9",

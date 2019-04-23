@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import Result from './views/Result.vue';
+import Lobby from './views/Lobby.vue';
 
 Vue.use(Router);
 
@@ -18,6 +19,10 @@ export default new Router({
       name: 'result',
       component: Result,
     }, {
+      path: '/lobby',
+      name: 'lobby',
+      component: Lobby,
+    }, {
       path: '/about',
       name: 'about',
       // route level code-splitting
@@ -26,7 +31,7 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
     },
     {
-      path: '/game',
+      path: '/game/:id',
       name: 'game',
       component: () => import(/* webpackChunkName: "game" */ './views/Game.vue'),
     },
